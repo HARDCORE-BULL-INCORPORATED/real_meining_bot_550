@@ -83,23 +83,11 @@ async function deployCommands() {
 		commands.push(command.data.toJSON());
 	}
 
-	try {
-		console.log("Started refreshing application (/) commands.");
-		console.log(commands);
+	await rest.put(Routes.applicationCommands(CLIENT_ID), {
+		body: commands,
+	});
 
-		const ali = await rest.put(Routes.applicationCommands(CLIENT_ID), {
-			body: commands,
-		});
-		console.log("??");
-
-		console.log(ali);
-
-		console.log("???");
-
-		console.log("Successfully reloaded application (/) commands.");
-	} catch (error) {
-		console.error(error);
-	}
+	console.log("Successfully reloaded application (/) commands.");
 }
 
 client.once(Events.ClientReady, () => {
