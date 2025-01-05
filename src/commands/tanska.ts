@@ -76,7 +76,8 @@ export const command: Command = {
 				if (newState.status === "idle") {
 					setTimeout(() => {
 						connection.destroy();
-					}, 69_000_000_000); // Wait 2 seconds before disconnecting
+
+					}, 900 000); // Wait 15 minutes before disconnecting
 				}
 			});
 
