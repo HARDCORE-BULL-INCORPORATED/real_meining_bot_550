@@ -8,13 +8,17 @@ import {
 	REST,
 	Routes,
 } from "discord.js";
-import type { Command } from "./discord";
+import type { Command } from "../discord";
 
 const client = new Client({
-	intents: [GatewayIntentBits.Guilds],
+	intents: [
+		GatewayIntentBits.Guilds,
+		GatewayIntentBits.GuildVoiceStates,
+		GatewayIntentBits.GuildMessages,
+	],
 });
 
-import { clientId as CLIENT_ID, token as TOKEN } from "./config.json";
+import { clientId as CLIENT_ID, token as TOKEN } from "../config.json";
 
 client.commands = new Collection<string, Command>();
 
@@ -83,7 +87,14 @@ async function deployCommands() {
 		console.log("Started refreshing application (/) commands.");
 		console.log(commands);
 
-		await rest.put(Routes.applicationCommands(CLIENT_ID), { body: commands });
+		const ali = await rest.put(Routes.applicationCommands(CLIENT_ID), {
+			body: commands,
+		});
+		console.log("??");
+
+		console.log(ali);
+
+		console.log("???");
 
 		console.log("Successfully reloaded application (/) commands.");
 	} catch (error) {
